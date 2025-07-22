@@ -64,4 +64,13 @@ A Flask-based web application for managing vehicle parking operations. It suppor
 
 
 
+
+
+
+
+
+
+Image
+
+
 <img width="1919" height="1023" alt="Screenshot 2025-07-22 104650" src="https://github.com/user-attachments/assets/e451ae5b-7c8c-4a40-a618-45efefa90dd3" />
