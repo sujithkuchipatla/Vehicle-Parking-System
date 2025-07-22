@@ -67,3 +67,16 @@ A Flask-based web application for managing vehicle parking operations. It suppor
     └── init_db.py               # DB initialization & admin creation
 ```
 
+
+Image
+
+Admin Dashboard
+
+<img width="1919" height="1023" alt="Screenshot 2025-07-22 104650" src="https://github.com/user-attachments/assets/4ccae98d-4d9f-432c-a933-d1bbb437ec67" />
+
+
+
+User Dashboard
+
+<img width="1919" height="1079" alt="Screenshot 2025-07-21 164233" src="https://github.com/user-attachments/assets/f5f77bbf-d273-4b56-9b55-8bd5d2457fee" />
+
