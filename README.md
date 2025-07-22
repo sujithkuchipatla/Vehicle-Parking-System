@@ -33,5 +33,37 @@ A Flask-based web application for managing vehicle parking operations. It suppor
 
 ## 📁 Folder Structure
 
-<pre><code> ``` /parking_app/ │ ├── app.py # Main Flask application ├── requirements.txt # List of dependencies │ ├── /templates/ # HTML templates │ ├── login.html │ ├── register.html │ ├── user_dashboard.html │ ├── spot_status.html │ └── /admin/ │ ├── dashboard.html │ ├── add_lot.html │ └── user.html │ ├── /static/ # Static files (CSS, images) │ ├── /css/ │ │ └── style.css │ └── /images/ │ └── logo.png │ ├── /models/ │ └── models.py # All database models │ ├── /controllers/ # Route controllers (Blueprints) │ ├── auth_controller.py # Login/registration │ ├── admin_controller.py # Admin routes │ └── user_controller.py # User routes │ └── /utils/ # (Optional) Helper functions └── init_db.py # DB initialization & admin creation ``` </code></pre>
+```bash
+/parking_app_22fxxxxxxxxx/
+│
+├── app.py                         # Main Flask application
+├── requirements.txt              # List of dependencies
+│
+├── /templates/                   # HTML templates
+│   ├── login.html
+│   ├── register.html
+│   ├── user_dashboard.html
+│   ├── spot_status.html
+│   └── /admin/
+│       ├── dashboard.html
+│       ├── add_lot.html
+│       └── user.html
+│
+├── /static/                      # Static files (CSS, images)
+│   ├── /css/
+│   │   └── style.css
+│   └── /images/
+│       └── logo.png
+│
+├── /models/
+│   └── models.py                 # All database models
+│
+├── /controllers/                # Route controllers (Blueprints)
+│   ├── auth_controller.py       # Login/registration
+│   ├── admin_controller.py      # Admin routes
+│   └── user_controller.py       # User routes
+│
+└── /utils/                      # (Optional) Helper functions
+    └── init_db.py               # DB initialization & admin creation
+```
 
