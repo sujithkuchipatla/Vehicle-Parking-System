@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h2>Welcome to Admin</h2>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="{{ url_for('admin.registered_users') }}">Users</a>
+            <a href="#">Search</a>
+            <a href="{{ url_for('admin.summary') }}">Summary</a>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+            <a href="#" style="color: blue;">Edit Profile</a>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <h3>Parking Lots</h3>
+
+        <div class="lot-wrapper">
+    {% for lot_entry in lot_data %}
+        {% set lot = lot_entry.lot %}
+        <div class="parking-lot">
+            <h4>{{ lot.prime_location_name }}</h4>
+            <div class="actions">
+                <a href="{{ url_for('admin.edit_lot', lot_id=lot.id) }}">Edit</a>
+                {% if lot_entry.occupied_count == 0 %}
+                    <a href="{{ url_for('admin.delete_lot', lot_id=lot.id) }}">Delete</a>
+                {% endif %}
+            </div>
+            <div class="status-summary">
+                (Occupied: {{ lot_entry.occupied_count }} / {{ lot_entry.max_spots }})
+            </div>
+            <div class="spot-grid">
+                {% for spot_info in lot_entry.spots %}
+                    {% set spot = spot_info.spot %}
+                    {% set reservation = spot_info.reservation %}
+                    <div 
+                        class="spot {% if spot.status == 'A' %}available{% else %}occupied{% endif %}"
+                        data-id="{{ spot.id }}"
+                        data-status="{{ spot.status }}"
+                        data-user-id="{{ reservation.user_id if reservation else 'N/A' }}"
+                        data-vehicle="{{ reservation.vehicle_number if reservation and reservation.vehicle_number else 'N/A' }}"
+                        data-time="{{ reservation.parking_timestamp if reservation else 'N/A' }}"
+                        data-cost="{{ reservation.parking_cost if reservation else 'N/A' }}"
+                        onclick="openSpotModal(this)">
+                        {{ spot.status }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+        <a href="{{ url_for('admin.add_lot') }}" class="add-lot-btn">+ Add Lot</a>
+    </div>
+
+    <!-- View/Delete Modal -->
+    <div id="spotModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>View Parking Spot</h3>
+            <p><strong>ID:</strong> <span id="modalSpotId"></span></p>
+            <p><strong>Status:</strong> <span id="modalSpotStatus"></span></p>
+
+            <div id="occupiedDetails" class="hidden">
+                <h4>Occupied Spot Details</h4>
+                <p><strong>User ID:</strong> <span id="modalUserId"></span></p>
+                <p><strong>Vehicle Number:</strong> <span id="modalVehicle"></span></p>
+                <p><strong>Parking Time:</strong> <span id="modalTime"></span></p>
+                <p><strong>Cost:</strong> ₹<span id="modalCost"></span></p>
+            </div>
+
+            <p class="note red" id="occupiedNote" style="display: none;">Note: Cannot delete an occupied spot.</p>
+
+            <form id="deleteForm" method="POST">
+                <button id="deleteBtn" type="submit">Delete</button>
+                <button type="button" onclick="closeModal()">Close</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openSpotModal(el) {
+            const id = el.dataset.id;
+            const status = el.dataset.status;
+            const userId = el.dataset.userId;
+            const vehicle = el.dataset.vehicle;
+            const time = el.dataset.time;
+            const cost = el.dataset.cost;
+
+            document.getElementById('modalSpotId').textContent = id;
+            document.getElementById('modalSpotStatus').textContent = status;
+            document.getElementById('modalUserId').textContent = userId;
+            document.getElementById('modalVehicle').textContent = vehicle;
+            document.getElementById('modalTime').textContent = time;
+            document.getElementById('modalCost').textContent = cost;
+
+            const occupiedSection = document.getElementById('occupiedDetails');
+            const deleteBtn = document.getElementById('deleteBtn');
+            const deleteForm = document.getElementById('deleteForm');
+            const note = document.getElementById('occupiedNote');
+
+            if (status === 'O') {
+                occupiedSection.classList.remove('hidden');
+                note.style.display = 'block';
+                deleteBtn.disabled = true;
+                deleteForm.action = "#";
+            } else {
+                occupiedSection.classList.add('hidden');
+                note.style.display = 'none';
+                deleteBtn.disabled = false;
+                deleteForm.action = `/delete_spot/${id}`;
+            }
+
+            document.getElementById('spotModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('spotModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

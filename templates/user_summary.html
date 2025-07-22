@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parking Usage Summary</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body style="font-family: Arial; padding: 20px;">
+
+<!-- Header -->
+<header style="background-color: #c8facc; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="color: red; font-weight: bold;">Welcome to User</div>
+    <div style="font-weight: bold;">
+        <a href="{{ url_for('user.dashboard') }}">Home</a> |
+        <a href="{{ url_for('user.summary') }}">Summary</a> |
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+    <div><a href="#" style="color: #1a73e8; font-weight: bold;">Edit Profile</a></div>
+</header>
+
+<h2>Summary of Parking Lot Usage</h2>
+<canvas id="usageChart" width="400" height="200"></canvas>
+
+<!-- Safe JSON injection using <script> tag -->
+<script id="chart-data" type="application/json">
+    {
+        "labels": {{ labels | tojson }},
+        "values": {{ values | tojson }}
+    }
+</script>
+
+<script>
+    const chartDataElement = document.getElementById('chart-data');
+    const chartData = JSON.parse(chartDataElement.textContent);
+
+    const ctx = document.getElementById('usageChart').getContext('2d');
+    const usageChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: chartData.labels,
+            datasets: [{
+                label: 'Number of Reservations',
+                data: chartData.values,
+                backgroundColor: ['#90ee90', '#87cefa', '#ffb6c1', '#ffa07a', '#dda0dd'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Reservations'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

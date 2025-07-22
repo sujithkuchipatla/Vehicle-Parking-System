@@ -1,0 +1,94 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.title {
+  color: #3a3a3a;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  text-decoration: underline;
+  color: #3c3ce7;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #d1f7d6;
+  border-radius: 6px;
+  margin-bottom: 25px;
+}
+
+.link {
+  color: #0077cc;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fcfcfc;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+th {
+  background-color: #eef;
+}
+
+.search-box {
+  padding: 8px;
+  width: 200px;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.btn.book {
+  background-color: #3c91e6;
+}
+
+.btn.release {
+  background-color: #e63946;
+}
+
+.status {
+  background-color: #a8d5a2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #2a4d2e;
+}

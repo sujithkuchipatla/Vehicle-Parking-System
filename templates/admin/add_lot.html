@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Parking Lot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_add_lot.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2 class="title">Add Parking Lot</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert {{ category }}">
+            {{ message }}
+            <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="lot-form">
+        <label>Location Name</label>
+        <input type="text" name="name" required>
+
+        <label>Address</label>
+        <input type="text" name="address" required>
+
+        <label>Pin Code</label>
+        <input type="text" name="pin_code" required>
+
+        <label>Price per Hour (₹)</label>
+        <input type="number" name="price" required>
+
+        <label>Total Number of Spots</label>
+        <input type="number" name="spots" required>
+
+        <div class="button-group">
+            <button type="submit">Add Lot</button>
+            <a href="{{ url_for('admin.dashboard') }}">Back</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

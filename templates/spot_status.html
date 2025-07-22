@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parking Spot Status</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .spot-box {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+        }
+        .available {
+            background-color: #28a745; /* green */
+        }
+        .occupied {
+            background-color: #dc3545; /* red */
+        }
+        .lot-card {
+            margin-bottom: 30px;
+        }
+        .spot-grid {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Parking Spot Status</h2>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary mb-4">⬅ Back to Dashboard</a>
+
+    {% for lot_block in lot_data %}
+        <div class="card lot-card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5>{{ lot_block.lot.prime_location_name }} ({{ lot_block.lot.address }})</h5>
+                <small>Total Spots: {{ lot_block.lot.maximum_number_of_spots }}</small>
+            </div>
+            <div class="card-body">
+                <div class="spot-grid">
+                    {% for spot in lot_block.spots %}
+                        {% if spot.status == 'A' %}
+                            <div class="spot-box available" title="Available">{{ spot.id }}</div>
+                        {% else %}
+                            <a href="{{ url_for('admin.view_vehicle_details', reservation_id=spot.reservation.id) }}"
+                               class="spot-box occupied" title="Occupied">
+                                {{ spot.id }}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

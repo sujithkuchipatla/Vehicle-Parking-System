@@ -1,0 +1,73 @@
+<!-- File: /templates/admin/users.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registered Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        .search-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 8px 12px;
+            width: 250px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #EF6C00;
+            box-shadow: 0 0 4px #EF6C00;
+        }
+    </style>
+</head>
+<body>
+    <div class="user-container">
+        <h2 class="user-title">Registered Users</h2>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search users...">
+        </div>
+
+        <table class="user-table" id="userTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Full Name</th>
+                    <th>Address</th>
+                    <th>Pincode</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.address }}</td>
+                    <td>{{ user.pin_code }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        searchInput.addEventListener("keyup", function () {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll("#userTable tbody tr");
+            rows.forEach(row => {
+                const rowText = row.innerText.toLowerCase();
+                row.style.display = rowText.includes(filter) ? "" : "none";
+            });
+        });
+    </script>
+</body>
+</html>

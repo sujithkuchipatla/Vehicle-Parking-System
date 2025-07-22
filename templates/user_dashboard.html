@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #263159;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Modal CSS */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: auto;
+            padding: 25px;
+            border-radius: 8px;
+            width: 400px;
+        }
+
+        .close {
+            float: right;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .info {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<header style="background-color: #c8facc; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="color: red; font-weight: bold;">Welcome to User</div>
+    <div style="font-weight: bold;">
+        <a href="{{ url_for('user.dashboard') }}">Home</a> |
+        <a href="{{ url_for('user.summary') }}">Summary</a> |
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+    <div><a href="#" style="color: #1a73e8; font-weight: bold;">Edit Profile</a></div>
+</header>
+
+
+{% if message %}
+    <p>{{ message }}</p>
+{% endif %}
+
+<h2>Recent Parking History</h2>
+<table>
+    <tbody>
+{% for reservation in reservations %}
+    <tr>
+        <td>{{ reservation.id }}</td>
+        <td>{{ reservation.spot.parking_lot.location }}</td>
+        <td>{{ reservation.vehicle_no }}</td>
+        <td>{{ reservation.parking_timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td>
+            {% if not reservation.leaving_timestamp %}
+                <button class="btn" onclick="openReleaseModal(
+                    '{{ reservation.id }}',
+                    '{{ reservation.spot.id }}',
+                    '{{ reservation.vehicle_no }}',
+                    '{{ reservation.parking_time_str }}'
+                )">Release</button>
+            {% else %}
+                <span style="color: gray;">Parked Out</span>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+<h2>Parking Lots</h2>
+<input type="text" placeholder="Search by location or pincode">
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Location</th>
+            <th>Available Spots</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for lot in lots %}
+        {% set available_spots = lot.spots | selectattr('status', 'equalto', 'A') | list %}
+        <tr>
+            <td>{{ lot.id }}</td>
+            <td>{{ lot.prime_location_name }}</td>
+            <td>{{ available_spots | length }}</td>
+            <td>
+                {% if available_spots %}
+                    <button class="btn" onclick="document.getElementById('modal-{{ lot.id }}-{{ available_spots[0].id }}').style.display='block'">Book</button>
+                {% else %}
+                    <button class="btn" style="background-color: #999;" disabled>No Spots</button>
+                {% endif %}
+            </td>
+        </tr>
+
+        {% if available_spots %}
+        <!-- Modal for each lot with available spot -->
+        <div id="modal-{{ lot.id }}-{{ available_spots[0].id }}" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="document.getElementById('modal-{{ lot.id }}-{{ available_spots[0].id }}').style.display='none'">&times;</span>
+                <h2>Confirm Your Booking</h2>
+                <form method="POST" action="{{ url_for('user.book_spot', lot_id=lot.id) }}">
+                    <input type="hidden" name="spot_id" value="{{ available_spots[0].id }}">
+                    <p><strong>Assigned Spot:</strong> {{ available_spots[0].id }}</p>
+                    <p><strong>Location:</strong> {{ lot.prime_location_name }}</p>
+
+                    <label for="vehicle_no"><strong>Vehicle Number:</strong></label><br>
+                    <input type="text" name="vehicle_no" required><br><br>
+
+                    <button type="submit" class="btn btn-success">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+
+<!-- Release Modal -->
+<!-- Release Modal -->
+<div id="releaseModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeReleaseModal()">&times;</span>
+        <h3>Release Parking Spot</h3>
+        <form method="POST" id="releaseForm">
+            <p><strong>Spot ID:</strong> <span id="modalSpotId"></span></p>
+            <p><strong>Vehicle Number:</strong> <span id="modalVehicle"></span></p>
+            <p><strong>Parking Time:</strong> <span id="modalParkingTime"></span></p>
+            <p><strong>Releasing Time:</strong> <span id="modalReleaseTime">{{ now }}</span></p>
+            <p><strong>Total Cost:</strong> Will be shown after release</p>
+
+            <button type="submit" class="btn">Release</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function openReleaseModal(resId, spotId, vehicle, parkingTime) {
+        document.getElementById('modalSpotId').innerText = spotId;
+        document.getElementById('modalVehicle').innerText = vehicle;
+        document.getElementById('modalParkingTime').innerText = parkingTime;
+
+        const now = new Date().toISOString().slice(0, 16).replace("T", " ");
+        document.getElementById('modalReleaseTime').innerText = now;
+
+        document.getElementById('releaseForm').action = `/user/release_spot/${resId}`;
+        document.getElementById('releaseModal').style.display = 'block';
+    }
+
+    function closeReleaseModal() {
+        document.getElementById('releaseModal').style.display = 'none';
+    }
+
+    // Close modals when clicking outside
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    };
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Parking Spot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/view_spot.css') }}">
+</head>
+<body>
+
+    <div class="box">
+        <h2>Parking Spot Details</h2>
+
+        <p><strong>Spot ID:</strong> {{ spot.id }}</p>
+
+        <p class="status {% if spot.status == 'O' %}occupied{% else %}available{% endif %}">
+            <strong>Status:</strong>
+            {% if spot.status == 'O' %}
+                Occupied
+            {% else %}
+                Available
+            {% endif %}
+        </p>
+
+        <form method="POST" action="{{ url_for('admin.delete_spot', spot_id=spot.id) }}">
+            <button type="submit" class="delete-btn" {% if spot.status == 'O' %}disabled{% endif %}>Delete</button>
+        </form>
+
+        {% if spot.status == 'O' and reservation %}
+        <div class="details">
+            <h4>Occupied Parking Spot Details</h4>
+            <p><strong>User ID:</strong> {{ reservation.user_id }}</p>
+            <p><strong>Parking Time:</strong> {{ reservation.parking_timestamp }}</p>
+            <p><strong>Leaving Time:</strong> {{ reservation.leaving_timestamp or "Not Yet Left" }}</p>
+            <p><strong>Cost/unit:</strong> ₹{{ reservation.parking_cost }}</p>
+        </div>
+        {% endif %}
+
+        <div class="notes">
+            <p>🔴 <strong>Occupied:</strong> Can't delete until vacated.</p>
+            <p>🟢 <strong>Available:</strong> Deletion allowed.</p>
+        </div>
+    </div>
+
+</body>
+</html>

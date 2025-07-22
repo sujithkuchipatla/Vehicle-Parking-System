@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Summary Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h2>Welcome to Admin</h2>
+        <div class="nav-links">
+            <a href="{{ url_for('admin.dashboard') }}">Home</a>
+            <a href="{{ url_for('admin.registered_users') }}">Users</a>
+            <a href="#">Search</a>
+            <a href="{{ url_for('admin.summary') }}" style="color: green;">Summary</a>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+            <a href="#">Edit Profile</a>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <h3>Statistical Summary</h3>
+
+        <div class="chart-container">
+            <canvas id="revenueChart" width="400" height="300"></canvas>
+            <canvas id="occupancyChart" width="400" height="300"></canvas>
+        </div>
+    </div>
+
+    <!-- Embed the data safely into JavaScript -->
+    <script>
+        const summaryData = JSON.parse('{{ data | tojson | safe }}');
+
+        // Revenue Donut
+        const revLabels = summaryData.map(item => item.location);
+        const revData = summaryData.map(item => item.revenue);
+
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'doughnut',
+            data: {
+                labels: revLabels,
+                datasets: [{
+                    data: revData,
+                    backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#E91E63']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Revenue from Each Parking Lot'
+                    }
+                }
+            }
+        });
+
+        // Occupancy Bar Chart
+        const occLabels = summaryData.map(item => item.location);
+        const occAvailable = summaryData.map(item => item.available);
+        const occOccupied = summaryData.map(item => item.occupied);
+
+        new Chart(document.getElementById('occupancyChart'), {
+            type: 'bar',
+            data: {
+                labels: occLabels,
+                datasets: [
+                    {
+                        label: 'Available',
+                        data: occAvailable,
+                        backgroundColor: '#4CAF50'
+                    },
+                    {
+                        label: 'Occupied',
+                        data: occOccupied,
+                        backgroundColor: '#F44336'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Available vs Occupied Parking Spots'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!-- templates/register.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+<body>
+  <div class="register-container">
+    <h2 class="title">Create Your Account</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in messages %}
+        <div class="alert {{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="post" class="register-form">
+      <label>Email</label>
+      <input name="email" type="email" required>
+
+      <label>Full Name</label>
+      <input name="name" type="text" required>
+
+      <label>Password</label>
+      <input name="password" type="password" required>
+
+      <label>Address</label>
+      <input name="address" type="text">
+
+      <label>Pin Code</label>
+      <input name="pin_code" type="text">
+
+      <button type="submit">Register</button>
+      <a href="{{ url_for('auth.login') }}" class="link">Login here</a>
+    </form>
+  </div>
+</body>
+</html>

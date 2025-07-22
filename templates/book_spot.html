@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Parking Spot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        }
+        .form-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            max-width: 500px;
+            margin: auto;
+            background-color: #f9f9f9;
+        }
+        label, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h2>Book Spot in {{ lot.prime_location_name }}</h2>
+
+        <form method="POST" action="{{ url_for('user.book_spot', lot_id=lot.id) }}">
+            <label>Spot Assigned:</label>
+            <input type="text" name="spot_id" value="{{ spot.id }}" readonly>
+
+            <label for="vehicle_no">Vehicle Number:</label>
+            <input type="text" id="vehicle_no" name="vehicle_no" required>
+
+            <button type="submit">Confirm Booking</button>
+        </form>
+    </div>
+</body>
+</html>

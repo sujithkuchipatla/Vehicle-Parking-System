@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 40px;
+    background-color: #f9f9f9;
+}
+
+.box {
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.status {
+    font-weight: bold;
+}
+
+.status.occupied {
+    color: red;
+}
+
+.status.available {
+    color: green;
+}
+
+.delete-btn {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.notes {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.details {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}

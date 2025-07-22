@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vehicle Details</title>
+</head>
+<body>
+    <h2>Vehicle Details</h2>
+    {% if reservation %}
+        <p><strong>User ID:</strong> {{ reservation.user_id }}</p>
+        <p><strong>Parking In:</strong> {{ reservation.parking_timestamp }}</p>
+        <p><strong>Leaving:</strong> {{ reservation.leaving_timestamp }}</p>
+        <p><strong>Cost/unit:</strong> {{ reservation.parking_cost }}</p>
+    {% else %}
+        <p>No reservation data found.</p>
+    {% endif %}
+</body>
+</html>

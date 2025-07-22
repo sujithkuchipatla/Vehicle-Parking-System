@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Release Parking Spot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+</head>
+<body>
+<div class="form-box">
+    <h2>Release the Parking Spot</h2>
+
+    <form action="{{ url_for('user.release_spot', reservation_id=reservation.id) }}" method="POST">
+        <label>Spot ID:</label>
+        <input type="text" name="spot_id" value="{{ reservation.spot_id }}" readonly>
+
+        <label>Vehicle Number:</label>
+        <input type="text" name="vehicle_no" value="{{ reservation.vehicle_no }}" readonly>
+
+        <label>Parking Time:</label>
+        <input type="text" name="parking_time" value="{{ reservation.parking_timestamp }}" readonly>
+
+        <label>Releasing Time:</label>
+        <input type="text" name="leaving_time" value="{{ current_time }}" readonly>
+
+        <label>Total Cost:</label>
+        <input type="text" name="parking_cost" value="{{ reservation.parking_cost }}" readonly>
+
+        <div class="button-group">
+            <button type="submit" class="btn">Release</button>
+            <a href="{{ url_for('user.dashboard') }}" class="btn cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

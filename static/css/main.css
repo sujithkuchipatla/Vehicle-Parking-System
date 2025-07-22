@@ -1,0 +1,129 @@
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+h2 {
+    color: #343a40;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    text-align: left;
+}
+
+.table-dark {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.btn {
+    margin-right: 0.5rem;
+}
+
+.alert {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+
+
+
+
+
+
+
+
+
+/* ===== User Table Section with Saffron Theme ===== */
+
+body {
+    background-color: #FFF8F0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.user-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.user-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #EF6C00; /* saffron */
+    margin-bottom: 25px;
+    border-bottom: 3px solid #FFB74D;
+    padding-bottom: 10px;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.user-table thead {
+    background-color: #FFE0B2;
+}
+
+.user-table th {
+    color: #BF360C;
+    font-weight: 600;
+    padding: 14px;
+    text-align: left;
+    border-bottom: 2px solid #FFB74D;
+}
+
+.user-table td {
+    padding: 12px 14px;
+    border: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.user-table tr:nth-child(even) {
+    background-color: #FFF3E0;
+}
+
+.user-table tr:hover {
+    background-color: #FFE0B2;
+    transition: background-color 0.3s ease;
+}

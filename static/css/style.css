@@ -1,0 +1,340 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #fdfdfd;
+}
+
+.header {
+    background-color: #c8f7c5;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    color: red;
+    margin: 0;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+}
+
+.nav-links a:hover {
+    color: #007bff;
+}
+
+.dashboard-container {
+    padding: 20px;
+}
+
+.lot-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.parking-lot {
+    border: 2px solid #0077cc;
+    border-radius: 10px;
+    padding: 15px;
+    width: 240px;
+}
+
+.parking-lot h4 {
+    margin-bottom: 10px;
+}
+
+.actions {
+    margin-bottom: 5px;
+}
+
+.actions a {
+    color: orange;
+    margin-right: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.status-summary {
+    color: green;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.spot-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.spot {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    color: #000;
+}
+
+.spot.available {
+    background-color: #aef8ae;
+    border: 2px solid #28a745;
+}
+
+.spot.occupied {
+    background-color: #f8a8a8;
+    border: 2px solid #dc3545;
+}
+
+.add-lot-btn {
+    margin-top: 20px;
+    display: inline-block;
+    background-color: #cce6ff;
+    border: 2px solid orange;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+
+/* Modal Styling */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    width: 400px;
+    border-radius: 8px;
+    text-align: left;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.modal-content h3, h4 {
+    margin-top: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.note.red {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+button {
+    padding: 8px 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* dashboard.css */
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background: #2e3a59;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.dashboard-container {
+    padding: 20px;
+}
+
+.lot-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.parking-lot {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    flex: 1 1 300px;
+}
+
+.spot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 40px);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.spot {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.available {
+    background: #c0f0c0;
+    color: green;
+}
+
+.occupied {
+    background: #fcb6b6;
+    color: darkred;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 300px;
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+.note.red {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+button {
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+button[disabled] {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+
+.chart-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+canvas {
+    max-width: 450px;
+    margin: 10px;
+}
+
+
+.popup-toggle {
+  display: none;
+}
+
+.popup-form {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  background: #fff;
+  padding: 20px;
+  border: 2px solid #001e4d;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.popup-toggle:checked + .popup-form {
+  display: block;
+}
+
+.btn {
+  padding: 6px 12px;
+  background-color: #001e4d;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.btn.cancel {
+  background-color: crimson;
+}

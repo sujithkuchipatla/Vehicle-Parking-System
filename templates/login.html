@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user_auth.css') }}">
+</head>
+<body>
+  <div class="form-container">
+    <h2 class="form-title">User Login</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in messages %}
+        <div class="alert {{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="post" class="auth-form">
+      <label>Registered Email ID:</label>
+      <input name="email" type="email" required>
+
+      <label>Password:</label>
+      <input name="password" type="password" required>
+
+      <button type="submit">Login</button>
+
+      <div class="link-wrapper">
+        <a href="{{ url_for('auth.register') }}" class="link-orange">Create Account?</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

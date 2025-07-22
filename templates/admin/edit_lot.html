@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Parking Lot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_lot.css') }}">
+</head>
+<body>
+    <div class="edit-container">
+        <div class="edit-box">
+            <div class="edit-title">Edit Parking Lot</div>
+            <form method="POST" action="">
+                <label>Prime Location Name :</label>
+                <input type="text" name="prime_location_name" value="{{ lot.prime_location_name }}" required>
+
+                <label>Address :</label>
+                <textarea name="address" required>{{ lot.address }}</textarea>
+
+                <label>Pin code :</label>
+                <input type="text" name="pin_code" value="{{ lot.pin_code }}" required>
+
+                <label>Price(per hour) :</label>
+                <input type="number" name="price" value="{{ lot.price }}" step="0.01" required>
+
+                <label>Maximum spots :</label>
+                <input type="number" name="max_spots" value="{{ lot.maximum_number_of_spots }}" required>
+
+                <!-- Add more fields if needed -->
+
+                <div class="button-container">
+                    <button type="submit" class="btn update">Update</button>
+                    <a href="{{ url_for('admin.dashboard') }}" class="btn cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
